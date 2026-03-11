@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-03-11",
+  "description": "DPI Watch — Digital Public Infrastructure stock monitoring",
+  "project": "DPI Watch",
+  "scheduled_agents": [
+    {
+      "id": "dpi-stock-watch-001",
+      "name": "DPI Stock Market Summary",
+      "type": "scheduled",
+      "schedule": "Market days (Mon-Fri) 9:00 AM IST",
+      "description": "Pre-market summary of DPI stocks, GovTech, and Digital Identity plays",
+      "source_file": "content/agents/dpi-stock-watch-agent.md",
+      "model": "vercel:minimax/minimax-m2.5",
+      "delivery": "telegram + hugo",
+      "repo": "CCAgentOrg/dpi-watch",
+      "cross_reference": ["cashless-watch"],
+      "next_run": "Mon-Fri at 9:00 AM IST"
+    }
+  ],
+  "on_demand_agents": [],
+  "helper_scripts": [
+    {
+      "name": "fetch-dpi-data.py",
+      "purpose": "Fetch DPI stock data from NSE/Yahoo",
+      "location": "scripts/"
+    }
+  ],
+  "stock_universe": {
+    "dpi_core": ["PAYTM", "INFIBEAM", "NPST", "FINOPB"],
+    "govtech": ["TCS", "INFY", "WIPRO", "TECHM", "HCLTECH", "COFORGE", "BSOFT", "MINDTREE"],
+    "digital_identity": ["PBFINTECH", "5PAISA", "CAMS"],
+    "infrastructure": ["TANLA", "ROUTE"]
+  }
+}
