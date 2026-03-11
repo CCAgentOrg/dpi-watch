@@ -1,35 +1,43 @@
 {
   "version": "1.0",
   "last_updated": "2026-03-11",
-  "description": "DPI Watch — Digital Public Infrastructure stock monitoring",
-  "project": "DPI Watch",
+  "description": "Machine-readable agent registry for DPI Watch — Digital Public Infrastructure stock monitoring",
   "scheduled_agents": [
     {
-      "id": "dpi-stock-watch-001",
-      "name": "DPI Stock Market Summary",
+      "id": "dpi-watch-stock",
+      "name": "DPI Watch Stock Market Summary",
       "type": "scheduled",
-      "schedule": "Market days (Mon-Fri) 9:00 AM IST",
-      "description": "Pre-market summary of DPI stocks, GovTech, and Digital Identity plays",
+      "schedule": "**Market days (Mon-Fri) 8:15 AM IST** — before 8:45 AM pre-market",
+      "description": "DPI stocks: UPI, Aadhaar, Digilocker, GovTech, and digital identity plays",
       "source_file": "content/agents/dpi-stock-watch-agent.md",
       "model": "vercel:minimax/minimax-m2.5",
-      "delivery": "telegram + hugo",
+      "delivery_method": "telegram + hugo",
       "repo": "CCAgentOrg/dpi-watch",
-      "cross_reference": ["cashless-watch"],
-      "next_run": "Mon-Fri at 9:00 AM IST"
+      "next_run": "Mon-Fri at 8:15 AM IST"
     }
   ],
-  "on_demand_agents": [],
   "helper_scripts": [
     {
       "name": "fetch-dpi-data.py",
       "purpose": "Fetch DPI stock data from NSE/Yahoo",
       "location": "scripts/"
+    },
+    {
+      "name": "generate-hugo-post.py",
+      "purpose": "Hugo markdown generation",
+      "location": "scripts/"
+    },
+    {
+      "name": "send-dpi-alert.py",
+      "purpose": "Telegram alert sender",
+      "location": "scripts/"
     }
   ],
-  "stock_universe": {
-    "dpi_core": ["PAYTM", "INFIBEAM", "NPST", "FINOPB"],
-    "govtech": ["TCS", "INFY", "WIPRO", "TECHM", "HCLTECH", "COFORGE", "BSOFT", "MINDTREE"],
-    "digital_identity": ["PBFINTECH", "5PAISA", "CAMS"],
-    "infrastructure": ["TANLA", "ROUTE"]
+  "cross_reference": {
+    "cashless_watch": {
+      "repo": "CCAgentOrg/cashless-watch",
+      "shared_scrips": ["PAYTM", "INFIBEAM", "NPST", "PBFINTECH", "FINOPB"],
+      "complementary_focus": "Payments vs Infrastructure"
+    }
   }
 }
